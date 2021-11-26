@@ -12,10 +12,9 @@ function Cell(row, column, isOpened, isFlagged, isMined, nbneiborMine) {
 
 
 function Board(nbRow, nbColumn, nbMine) {
-    var board = {}
-    for (var row = 0; row < nbRow; row++) {
-        for (var column = 0; column < nbColumn; column++) {
-            console.log("Création d'une cell");
+    let board = {}
+    for (let row = 0; row < nbRow; row++) {
+        for (let column = 0; column < nbColumn; column++) {
             board[row + "" + column] = Cell(row, column, false, false, false, 0)
         }
     }
@@ -35,15 +34,15 @@ function Board(nbRow, nbColumn, nbMine) {
 
 function assignMinesRandomly(board, nbRow, nbColumn, nbMines) {
 
-    var minesCoor = [];
+    let minesCoor = [];
     for (let i = 0; i < nbMines; i++) {
-        var randomColumn = getRandomInteger(0, nbColumn)
-        var randomRow = getRandomInteger(0, nbRow)
-        var cell = randomRow + "" + randomColumn;
+        let randomColumn = getRandomInteger(0, nbColumn)
+        let randomRow = getRandomInteger(0, nbRow)
+        let cell = randomRow + "" + randomColumn;
         while (minesCoor.includes(cell)) {
-            var randomColumn = getRandomInteger(0, nbColumn)
-            var randomRow = getRandomInteger(0, nbRow)
-            var cell = randomRow + "" + randomColumn;
+            let randomColumn = getRandomInteger(0, nbColumn)
+            let randomRow = getRandomInteger(0, nbRow)
+            let cell = randomRow + "" + randomColumn;
         }
         minesCoor.push(cell)
         board[cell].isMined = true;
@@ -55,16 +54,16 @@ function assignNumberOfNeighborMines(board, nbRow, nbColumn) {
     /**
      * TODO assigner à chaque case son nombre de voisin
      */
-    var cell;
-    var neighborMineCount = 0;
-    for (var row = 0; row < nbRow; row++) {
-        for (var column = 0; column < nbColumn; column++) {
-            var id = row + "" + column;
+    let cell;
+    let neighborMineCount = 0;
+    for (let row = 0; row < nbRow; row++) {
+        for (let column = 0; column < nbColumn; column++) {
+            let id = row + "" + column;
             cell = board[id];
             if (!cell.mined) {
-                var neighbors = getNeighbors(id);
+                let neighbors = getNeighbors(id);
                 neighborMineCount = 0;
-                for (var i = 0; i < neighbors.length; i++) {
+                for (let i = 0; i < neighbors.length; i++) {
                     neighborMineCount += isMined(board, neighbors[i]);
                 }
                 cell.nbneiborMine = neighborMineCount;
@@ -74,10 +73,10 @@ function assignNumberOfNeighborMines(board, nbRow, nbColumn) {
     return board;
 }
 
-var getNeighbors = function(id) {
-    var row = parseInt(id[0]);
-    var column = parseInt(id[1]);
-    var neighbors = [];
+let getNeighbors = function(id) {
+    let row = parseInt(id[0]);
+    let column = parseInt(id[1]);
+    let neighbors = [];
     neighbors.push((row - 1) + "" + (column - 1));
     neighbors.push((row - 1) + "" + column);
     neighbors.push((row - 1) + "" + (column + 1));
@@ -87,7 +86,7 @@ var getNeighbors = function(id) {
     neighbors.push((row + 1) + "" + column);
     neighbors.push((row + 1) + "" + (column + 1));
 
-    for (var i = 0; i < neighbors.length; i++) {
+    for (let i = 0; i < neighbors.length; i++) {
         if (neighbors[i].length > 2) {
             neighbors.splice(i, 1);
             i--;
@@ -97,16 +96,16 @@ var getNeighbors = function(id) {
     return neighbors
 }
 
-var isMined = function(board, id) {
-    var cell = board[id];
-    var mined = 0;
+let isMined = function(board, id) {
+    let cell = board[id];
+    let mined = 0;
     if (typeof cell !== 'undefined') {
         mined = cell.isMined ? 1 : 0;
     }
     return mined;
 }
 
-var getRandomInteger = function(min, max) {
+let getRandomInteger = function(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
@@ -177,11 +176,10 @@ export function getCell(id) {
 }
 
 
-const NBROW = 5;
-const NBCOLUMN = 5;
-const NBMINES = 5;
+const NBROW = 10;
+const NBCOLUMN = 10;
+const NBMINES = 10;
 
 let gameover = false;
 let board;
 let startGame = start(NBROW, NBCOLUMN, NBMINES);
-console.log(board)
