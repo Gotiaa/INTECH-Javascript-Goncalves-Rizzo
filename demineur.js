@@ -1,11 +1,3 @@
-var boardSize = rowSize * columnSize;
-var columnSize = 10;
-var rowSize = 10;
-var nbMines = 10;
-var timer = 0;
-var timeout;
-var minesRemaining;
-
 function Cell(row, column, isOpened, isFlagged, isMined, nbneiborMine) {
     return {
         id: row + "" + column,
@@ -18,62 +10,46 @@ function Cell(row, column, isOpened, isFlagged, isMined, nbneiborMine) {
     }
 }
 
-function Board(nbRow, nbColumn, mineCount) {
+function getCell(id) {
+    return board[id]
+}
+
+function Board(nbRow, nbColumn, nbMine) {
     var board = {}
     for (var row = 0; row < nbRow; row++) {
         for (var column = 0; column < nbColumn; column++) {
+            console.log("Création d'une cell");
             board[row + "" + column] = Cell(row, column, false, false, false, 0)
         }
     }
     /**
      * TODO : assignMinesRandomly
      */
+    assignMinesRandomly(board, nbRow, nbColumn, nbMine);
 
     /**
      * TODO : assignNumberOfNeighborMines
      */
+    assignNumberOfNeighborMines(board, nbRow, nbColumn);
 
     return board;
 }
 
-function handleClick(id) {
-    /**
-     * TODO Faire une action en fonction de l'etat
-     * de la cellule
-     *
-     */
-    document.querySelector("#board").addEventListener(
-        "click", // Le type de l'événement sous forme de chaîne de caractères
-        { capture: false, once: false, passive: true } // Des options
-    );
 
-}
-
-function handleRightClick(id) {
-    /**
-     * TODO Passer la cellule comme marquée + 
-     * afficher/cacher un drapeau sur la cellule
-     */
-    document.querySelector("#board").addEventListener(
-        "auxclick", // Le type de l'événement sous forme de chaîne de caractères
-        { capture: false, once: false, passive: true } // Des options
-    );
-}
-
-function assignMinesRandomly(board, nbMines) {
+function assignMinesRandomly(board, nbRow, nbColumn, nbMines) {
 
     var minesCoor = [];
-    for (let i = 0; i < mineCount; i++) {
+    for (let i = 0; i < nbMines; i++) {
         var randomColumn = getRandomInteger(0, nbColumn)
-        var randomRow = getRandomColumn(0, nbRow)
+        var randomRow = getRandomInteger(0, nbRow)
         var cell = randomRow + "" + randomColumn;
         while (minesCoor.includes(cell)) {
             var randomColumn = getRandomInteger(0, nbColumn)
-            var randomRow = getRandomColumn(0, nbRow)
+            var randomRow = getRandomInteger(0, nbRow)
             var cell = randomRow + "" + randomColumn;
         }
         minesCoor.push(cell)
-        board[cell].mined = true;
+        board[cell].isMined = true;
     }
     return board;
 }
@@ -94,7 +70,7 @@ function assignNumberOfNeighborMines(board, nbRow, nbColumn) {
                 for (var i = 0; i < neighbors.length; i++) {
                     neighborMineCount += isMined(board, neighbors[i]);
                 }
-                cell.neighborMineCount = neighborMineCount;
+                cell.nbneiborMine = neighborMineCount;
             }
         }
     }
@@ -128,7 +104,7 @@ var isMined = function(board, id) {
     var cell = board[id];
     var mined = 0;
     if (typeof cell !== 'undefined') {
-        mined = cell.mined ? 1 : 0;
+        mined = cell.isMined ? 1 : 0;
     }
     return mined;
 }
@@ -137,15 +113,17 @@ var getRandomInteger = function(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function start(boardSize, nbMines) {
-    setMessageStart("La partie commence")
+function start(nbRow, nbColumn, nbMines) {
+    //setMessageStart("La partie commence");
+    board = Board(nbRow, nbColumn, nbMines);
+    return board;
 }
 
-function setMessageStart(message) {
-    const messageStart = document.querySelector("#messageStart");
-    messageStart.innerHTML = message;
-    console.log("ceci est un test")
-}
+// function setMessageStart(message) {
+//     const messageStart = document.querySelector("#messageStart");
+//     messageStart.innerHTML = message;
+//     console.log("ceci est un test")
+// }
 
 function printCells() {
     const boardDiv = document.querySelector("#board");
@@ -159,6 +137,12 @@ function printCells() {
     }
 }
 
-var test = setMessageStart("la partie commence")
-var print = printCells()
-var rightClick = handleClick()
+function handleClick(id) {
+
+}
+
+function handleRightClick(id) {}
+
+let board;
+let startGame = start(5, 5, 5);
+console.log(board)
