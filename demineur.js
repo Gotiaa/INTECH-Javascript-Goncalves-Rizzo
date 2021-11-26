@@ -116,23 +116,14 @@ export function start(nbRow, nbColumn, nbMines) {
     return board;
 }
 
-function printCells() {
-    const boardDiv = document.querySelector("#board");
-    for (let row = 0; row < rowSize; row++) {
-        for (let col = 0; col < columnSize; col++) {
-            const cell = document.createElement("div");
-            cell.setAttribute("id", row + "-" + col);
-            cell.setAttribute("class", "cell");
-            boardDiv.appendChild(cell);
-        }
-    }
-}
 
 export function openEmptyCases() {
     let modifiedCells = []
     for (let i = 0; i < board.length; i++) {
-        if (board[i].nbneiborMine === 0) board[i].isOpened = true;
-        modifiedCells.slice(board[i].id);
+        if (board[i].nbneiborMine === 0) {
+            board[i].isOpened = true;
+            modifiedCells.push(board[i].id);
+        }
     }
     return modifiedCells;
 }
