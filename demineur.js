@@ -143,6 +143,28 @@ function handleClick(id) {
 
 function handleRightClick(id) {}
 
+function getNbRow() {
+    return NBROW;
+}
+
+function getNbColumn() {
+    return NBCOLUMN;
+}
+
+function getNbMines() {
+    return NBMINES;
+}
+
+function getIsGameOver() {
+    return gameover;
+}
+
+
+const NBROW = 5;
+const NBCOLUMN = 5;
+const NBMINES = 5;
+
+let gameover = false;
 let board;
-let startGame = start(5, 5, 5);
+let startGame = start(NBROW, NBCOLUMN, NBMINES);
 console.log(board)
