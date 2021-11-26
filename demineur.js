@@ -116,12 +116,6 @@ export function start(nbRow, nbColumn, nbMines) {
     return board;
 }
 
-// function setMessageStart(message) {
-//     const messageStart = document.querySelector("#messageStart");
-//     messageStart.innerHTML = message;
-//     console.log("ceci est un test")
-// }
-
 function printCells() {
     const boardDiv = document.querySelector("#board");
     for (let row = 0; row < rowSize; row++) {
@@ -134,6 +128,16 @@ function printCells() {
     }
 }
 
+export function isWin() {
+    for (let i = 0; i < board.length; i++) {
+        if (board[i].isOpened || !board[i].isMined) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
 export function handleClick(id) {
     let cell = getCell(id);
     if (cell.isOpened) {
@@ -141,7 +145,7 @@ export function handleClick(id) {
     } else if (cell.isMined) {
         gameover = true;
         return;
-    } else {
+    } else if (!cell.isOpened) {
         cell.isOpened = true;
     }
 }
