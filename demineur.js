@@ -10,9 +10,6 @@ function Cell(row, column, isOpened, isFlagged, isMined, nbneiborMine) {
     }
 }
 
-function getCell(id) {
-    return board[id]
-}
 
 function Board(nbRow, nbColumn, nbMine) {
     var board = {}
@@ -113,7 +110,7 @@ var getRandomInteger = function(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function start(nbRow, nbColumn, nbMines) {
+export function start(nbRow, nbColumn, nbMines) {
     //setMessageStart("La partie commence");
     board = Board(nbRow, nbColumn, nbMines);
     return board;
@@ -137,26 +134,43 @@ function printCells() {
     }
 }
 
-function handleClick(id) {
-
+export function handleClick(id) {
+    let cell = getCell(id);
+    if (cell.isOpened) {
+        return;
+    } else if (cell.isMined) {
+        gameover = true;
+        return;
+    } else {
+        cell.isOpened = true;
+    }
 }
 
-function handleRightClick(id) {}
+export function handleRightClick(id) {
+    let cell = getCell(id);
+    cell.isFlagged = !cell.isFlagged;
+}
 
-function getNbRow() {
+
+export function getNbRow() {
     return NBROW;
 }
 
-function getNbColumn() {
+export function getNbColumn() {
     return NBCOLUMN;
 }
 
-function getNbMines() {
+export function getNbMines() {
     return NBMINES;
 }
 
-function getIsGameOver() {
+export function getIsGameOver() {
     return gameover;
+}
+
+
+export function getCell(id) {
+    return board[id]
 }
 
 
