@@ -28,19 +28,17 @@ function Board(nbRow, nbColumn, mineCount) {
     return board;
 }
 
-function createCells(rowSize, columnSize) {
-    /**
-     * TODO Creation dynamique de cellules + Affectation
-     * des id et des styles pour affichage
-     */
-}
-
 function handleClick(id) {
     /**
      * TODO Faire une action en fonction de l'etat
      * de la cellule
      *
      */
+    document.querySelector("#board").addEventListener(
+        "click",                                      // Le type de l'événement sous forme de chaîne de caractères
+        { capture: false, once: false, passive: true } // Des options
+    );
+        
 }
 
 function handleRightClick(id) {
@@ -48,6 +46,10 @@ function handleRightClick(id) {
      * TODO Passer la cellule comme marquée + 
      * afficher/cacher un drapeau sur la cellule
      */
+     document.querySelector("#board").addEventListener(
+        "auxclick",                                      // Le type de l'événement sous forme de chaîne de caractères
+        { capture: false, once: false, passive: true } // Des options
+    );
 }
 
 function assignMinesRandomly(board, nbMines) {
