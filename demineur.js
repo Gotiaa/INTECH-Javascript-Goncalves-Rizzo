@@ -128,6 +128,15 @@ function printCells() {
     }
 }
 
+export function openEmptyCases() {
+    let modifiedCells = []
+    for (let i = 0; i < board.length; i++) {
+        if (board[i].nbneiborMine === 0) board[i].isOpened = true;
+        modifiedCells.slice(board[i].id);
+    }
+    return modifiedCells;
+}
+
 export function isWin() {
     for (let i = 0; i < board.length; i++) {
         if (board[i].isOpened || !board[i].isMined) {
@@ -154,7 +163,6 @@ export function handleRightClick(id) {
     let cell = getCell(id);
     cell.isFlagged = !cell.isFlagged;
 }
-
 
 export function getNbRow() {
     return NBROW;
